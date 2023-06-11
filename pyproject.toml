@@ -1,0 +1,15 @@
+[tool.poetry]
+name = "server"
+version = "0.1.0"
+description = "Mathtrix API Server"
+authors = ["Harikeshav R <r.harikeshav@gmail.com>"]
+license = "GNU General Public License v3.0"
+readme = "README.md"
+
+[tool.poetry.dependencies]
+python = "^3.11"
+
+
+[build-system]
+requires = ["poetry-core"]
+build-backend = "poetry.core.masonry.api"
