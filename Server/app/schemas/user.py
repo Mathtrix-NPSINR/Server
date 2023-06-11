@@ -1,4 +1,3 @@
-from app.schemas.team import Team
 from pydantic import BaseModel, EmailStr, constr
 
 
@@ -12,7 +11,6 @@ class UserBase(BaseModel):
     user_attendance: bool | None = None
 
     team_id: int | None = None
-    team: Team | None = None
 
 
 class UserCreate(UserBase):
