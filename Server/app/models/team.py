@@ -14,4 +14,4 @@ class Team(Base):
         ForeignKey("events.event_name"), nullable=False
     )
 
-    team_members: Mapped[list["User"]] = relationship(back_populates="team")
+    team_members: Mapped[list["User"]] = relationship()

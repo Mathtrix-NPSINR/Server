@@ -16,4 +16,3 @@ class User(Base):
     user_attendance: Mapped[bool] = mapped_column(Boolean, nullable=False)
 
     team_id: Mapped[str] = mapped_column(ForeignKey("teams.id"))
-    team: Mapped["Team"] = relationship(back_populates="team_members")
