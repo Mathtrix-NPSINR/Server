@@ -12,6 +12,7 @@ fastapi = {extras = ["all"], version = "^0.96.1"}
 python-dotenv = "^1.0.0"
 sqlalchemy = "^2.0.16"
 yagmail = "^0.15.293"
+qrcode = "^7.4.2"
 
 
 [build-system]
