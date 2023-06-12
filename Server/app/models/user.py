@@ -1,7 +1,7 @@
 from sqlalchemy import Integer, String, ForeignKey, Boolean
-from sqlalchemy.orm import Mapped, mapped_column, relationship
+from sqlalchemy.orm import Mapped, mapped_column
 
-from app.core import Base
+from app.core.db import Base
 
 
 class User(Base):
@@ -15,4 +15,4 @@ class User(Base):
     user_school: Mapped[str] = mapped_column(String, nullable=False)
     user_attendance: Mapped[bool] = mapped_column(Boolean, nullable=False)
 
-    team_id: Mapped[str] = mapped_column(ForeignKey("teams.id"))
+    team_id: Mapped[int] = mapped_column(ForeignKey("teams.id"))
