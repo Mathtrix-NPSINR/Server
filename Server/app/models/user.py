@@ -15,4 +15,4 @@ class User(Base):
     user_school: Mapped[str] = mapped_column(String, nullable=False)
     user_attendance: Mapped[bool] = mapped_column(Boolean, nullable=False)
 
-    team_id: Mapped[int] = mapped_column(ForeignKey("teams.id"))
+    team_id: Mapped[int] = mapped_column(ForeignKey("teams.id"), nullable=True)
