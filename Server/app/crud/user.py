@@ -29,19 +29,19 @@ def read_user(db: Session, user_id: int):
 def update_user(db: Session, user_id: int, user: user_schemas.UserUpdate):
     db_user = db.query(user_models.User).filter(user_models.User.id == user_id).first()
 
-    if user.user_name:
+    if user.user_name is not None:
         db_user.user_name = user.user_name
 
-    if user.user_email:
+    if user.user_email is not None:
         db_user.user_email = user.user_email
 
-    if user.user_phone:
+    if user.user_phone is not None:
         db_user.user_phone = user.user_phone
 
-    if user.user_school:
+    if user.user_school is not None:
         db_user.user_school = user.user_school
 
-    if user.user_attendance:
+    if user.user_attendance is not None:
         db_user.user_attendance = user.user_attendance
 
     db.add(db_user)

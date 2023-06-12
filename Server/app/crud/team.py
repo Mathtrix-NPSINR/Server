@@ -26,13 +26,13 @@ def read_team(db: Session, team_id: int):
 def update_team(db: Session, team_id: int, team: team_schemas.TeamUpdate):
     db_team = db.query(team_models.Team).filter(team_models.Team.id == team_id).first()
 
-    if team.team_name:
+    if team.team_name is not None:
         db_team.team_name = team.team_name
 
-    if team.team_school:
+    if team.team_school is not None:
         db_team.team_school = team.team_school
 
-    if team.team_event:
+    if team.team_event is not None:
         db_team.team_event = team.team_event
 
     db.add(db_team)
