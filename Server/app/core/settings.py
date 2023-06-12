@@ -12,4 +12,5 @@ class Settings:
     MATHTRIX_EMAIL_PASSWORD = os.getenv("MATHTRIX_EMAIL_PASSWORD")
     QR_CODES_DIRECTORY = "app/data/qrcodes/"
 
+
 settings = Settings()

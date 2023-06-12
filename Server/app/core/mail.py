@@ -1,4 +1,5 @@
 import yagmail
+
 from app.core.settings import settings
 
 server = yagmail.SMTP(

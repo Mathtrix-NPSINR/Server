@@ -1,11 +1,12 @@
+from fastapi import APIRouter, Depends, HTTPException
+from sqlalchemy.exc import IntegrityError
+from sqlalchemy.orm import Session
+
 from app.core.db import get_db
 from app.core.mail import send_email
 from app.core.qr_code import create_qr_code
 from app.crud.user import create_user, delete_user, read_user, update_user
 from app.schemas.user import User, UserCreate, UserUpdate
-from fastapi import APIRouter, Depends, HTTPException
-from sqlalchemy.exc import IntegrityError
-from sqlalchemy.orm import Session
 
 router = APIRouter()
 
