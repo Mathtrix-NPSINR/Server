@@ -1,4 +1,4 @@
-from sqlalchemy import Integer, String
+from sqlalchemy import Integer, String, ForeignKey
 from sqlalchemy.orm import Mapped, mapped_column, relationship
 
 from app.core.db import Base
@@ -14,3 +14,5 @@ class Team(Base):
     team_event: Mapped[str] = mapped_column(String, nullable=False)
 
     team_members: Mapped[list["User"]] = relationship()
+
+    event_id: Mapped[int] = mapped_column(ForeignKey("events.id"), nullable=True)
