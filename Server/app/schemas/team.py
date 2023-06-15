@@ -10,11 +10,15 @@ class TeamBase(BaseModel):
 
     team_members: list[User] | None = None
 
+    event_id: int | None = None
+
 
 class TeamCreate(TeamBase):
     team_name: str
     team_school: str
     team_event: str
+
+    event_id: int
 
 
 class TeamUpdate(TeamBase):
