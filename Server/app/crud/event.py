@@ -27,7 +27,7 @@ def read_event(db: Session, event_id: int):
     return db_event
 
 
-def update_event(db: Session, event_id: int, event: EventUpdate):
+def update_event(db: Session, event_id: int, event: event_schemas.EventUpdate):
     db_event = db.query(event_models.Event).filter(event_models.Event.id == event_id).first()
 
     if event.event_name is not None:
@@ -49,8 +49,8 @@ def update_event(db: Session, event_id: int, event: EventUpdate):
         db_event.event_icon = event.event_icon
 
     db.add(db_event)
-    db.refresh(db_event)
     db.commit()
+    db.refresh(db_event)
 
     return db_event
 
