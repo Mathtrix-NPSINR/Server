@@ -9,6 +9,7 @@ def create_team(db: Session, team: team_schemas.TeamCreate):
         team_name=team.team_name,
         team_school=team.team_school,
         team_event=team.team_event,
+        event_id=team.event_id
     )
 
     db.add(db_team)
