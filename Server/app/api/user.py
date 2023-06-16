@@ -36,7 +36,7 @@ async def create_user_endpoint(*, db: Session = Depends(get_db), user: UserCreat
         )
 
 
-@router.get("/{user_id}", response_model=User)
+@router.get("/", response_model=User)
 async def get_user_endpoint(*, db: Session = Depends(get_db), user_id: int):
     db_user = read_user(db=db, user_id=user_id)
 
@@ -48,7 +48,7 @@ async def get_user_endpoint(*, db: Session = Depends(get_db), user_id: int):
     return db_user
 
 
-@router.put("/{user_id}", response_model=User)
+@router.put("/", response_model=User)
 async def update_user_endpoint(
     *, db: Session = Depends(get_db), user_id: int, user: UserUpdate
 ):
@@ -62,7 +62,7 @@ async def update_user_endpoint(
     return update_user(db=db, user_id=user_id, user=user)
 
 
-@router.delete("/{user_id}")
+@router.delete("/")
 async def delete_user_endpoint(*, db: Session = Depends(get_db), user_id: int):
     db_user = read_user(db=db, user_id=user_id)
 

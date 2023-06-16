@@ -20,7 +20,7 @@ async def create_event_endpoint(*, db: Session = Depends(get_db), event: EventCr
         )
 
 
-@router.get("/{event_id}", response_model=Event)
+@router.get("/", response_model=Event)
 async def get_event_endpoint(*, db: Session = Depends(get_db), event_id: int):
     db_event = read_event(db=db, event_id=event_id)
 
@@ -32,7 +32,7 @@ async def get_event_endpoint(*, db: Session = Depends(get_db), event_id: int):
     return db_event
 
 
-@router.put("/{event_id}", response_model=Event)
+@router.put("/", response_model=Event)
 async def update_event_endpoint(
     *, db: Session = Depends(get_db), event_id: int, event: EventUpdate
 ):
@@ -46,7 +46,7 @@ async def update_event_endpoint(
     return update_event(db=db, event_id=event_id, event=event)
 
 
-@router.delete("/{event_id}")
+@router.delete("/")
 async def delete_event_endpoint(*, db: Session = Depends(get_db), event_id: int):
     db_event = read_event(db=db, event_id=event_id)
 

@@ -21,7 +21,7 @@ async def create_team_endpoint(*, db: Session = Depends(get_db), team: TeamCreat
         )
 
 
-@router.get("/{team_id}", response_model=Team)
+@router.get("/", response_model=Team)
 async def get_team_endpoint(*, db: Session = Depends(get_db), team_id: int):
     db_team = read_team(db=db, team_id=team_id)
 
@@ -33,7 +33,7 @@ async def get_team_endpoint(*, db: Session = Depends(get_db), team_id: int):
     return db_team
 
 
-@router.put("/{team_id}", response_model=Team)
+@router.put("/", response_model=Team)
 async def update_team_endpoint(
     *, db: Session = Depends(get_db), team_id: int, team: TeamUpdate
 ):
@@ -47,7 +47,7 @@ async def update_team_endpoint(
     return update_team(db=db, team_id=team_id, team=team)
 
 
-@router.delete("/{team_id}")
+@router.delete("/")
 async def delete_team_endpoint(*, db: Session = Depends(get_db), team_id: int):
     db_team = read_team(db=db, team_id=team_id)
 
