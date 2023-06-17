@@ -49,7 +49,7 @@ async def get_event_endpoint(
 
     if not db_event:
         raise HTTPException(
-            status_code=404, detail=f"A event with the id {event_id} does not exist!"
+            status_code=404, detail=f"An event with the id {event_id} does not exist!"
         )
 
     logger.info(f"{api_key.user} read the details of the event id {db_event.id}")
@@ -69,7 +69,7 @@ async def update_event_endpoint(
 
     if not db_event:
         raise HTTPException(
-            status_code=404, detail=f"A event with the id {event_id} does not exist!"
+            status_code=404, detail=f"An event with the id {event_id} does not exist!"
         )
 
     logger.info(f"{api_key.user} updated the details of the event id {db_event.id}")
@@ -88,7 +88,7 @@ async def delete_event_endpoint(
 
     if not db_event:
         raise HTTPException(
-            status_code=404, detail=f"A with the event id {event_id} does not exist!"
+            status_code=404, detail=f"An event with the event id {event_id} does not exist!"
         )
 
     logger.info(f"{api_key.user} deleted the event id {db_event.id}")
