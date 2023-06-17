@@ -17,4 +17,3 @@ class Event(Base):
     event_icon: Mapped[str] = mapped_column(String, nullable=False)
 
     event_teams: Mapped[list["Team"]] = relationship()
-

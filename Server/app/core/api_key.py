@@ -1,8 +1,9 @@
-from app.core.db import get_db
-from app.crud.api_key import read_api_key
 from fastapi import Depends, HTTPException, Security, status
 from fastapi.security import APIKeyQuery
 from sqlalchemy.orm import Session
+
+from app.core.db import get_db
+from app.crud.api_key import read_api_key
 
 api_key = APIKeyQuery(name="api-key", auto_error=False)
 
