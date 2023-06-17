@@ -6,6 +6,7 @@ from sqlalchemy.orm import Session
 from app.core.api_key import get_api_key
 from app.core.db import get_db
 from app.crud.event import create_event, delete_event, read_event, update_event
+
 # from app.crud.api_key import create_api_key
 from app.schemas.event import Event, EventCreate, EventUpdate
 
@@ -88,7 +89,8 @@ async def delete_event_endpoint(
 
     if not db_event:
         raise HTTPException(
-            status_code=404, detail=f"An event with the event id {event_id} does not exist!"
+            status_code=404,
+            detail=f"An event with the event id {event_id} does not exist!",
         )
 
     logger.info(f"{api_key.user} deleted the event id {db_event.id}")
