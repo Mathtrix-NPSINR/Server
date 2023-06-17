@@ -13,7 +13,7 @@ def get_api_key(api_key: str = Security(api_key), db: Session = Depends(get_db))
     if not db_api_key:
         raise HTTPException(
             status_code=status.HTTP_401_UNAUTHORIZED,
-            detail="Invalid or missing API Key",
+            detail="Invalid or missing API Key!",
         )
 
     return db_api_key
