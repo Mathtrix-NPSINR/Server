@@ -14,7 +14,7 @@ router = APIRouter()
 
 
 @router.post("/", response_model=User)
-async def create_user_endpoint(*, db: Session = Depends(get_db), user: UserCreate):
+async def create_user_endpoint(*, db: Session = Depends(get_db), api_key = Security(get_api_key), user: UserCreate):
     try:
         db_user = create_user(db=db, user=user)
 
@@ -29,7 +29,7 @@ async def create_user_endpoint(*, db: Session = Depends(get_db), user: UserCreat
             attachments=[qr_code_path],
         )
 
-        logger.info(f"A new user with the user id {db_user.id} was created!")
+        logger.info(f"{api_key.user} new user with the user id {db_user.id}")
 
         return db_user
 

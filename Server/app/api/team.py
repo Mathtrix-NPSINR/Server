@@ -1,12 +1,11 @@
-from fastapi import APIRouter, Depends, HTTPException, Security
-from loguru import logger
-from sqlalchemy.exc import IntegrityError
-from sqlalchemy.orm import Session
-
 from app.core.api_key import get_api_key
 from app.core.db import get_db
 from app.crud.team import create_team, delete_team, read_team, update_team
 from app.schemas.team import Team, TeamCreate, TeamUpdate
+from fastapi import APIRouter, Depends, HTTPException, Security
+from loguru import logger
+from sqlalchemy.exc import IntegrityError
+from sqlalchemy.orm import Session
 
 router = APIRouter()
 
@@ -15,10 +14,12 @@ router = APIRouter()
 async def create_team_endpoint(
     *,
     db: Session = Depends(get_db),
+    api_key=Security(get_api_key),
     team: TeamCreate,
 ):
     try:
         db_team = create_team(db=db, team=team)
+        logger.info(f"{api_key.user} created a new team with the team id {db_team.id}")
         return db_team
 
     except IntegrityError:
