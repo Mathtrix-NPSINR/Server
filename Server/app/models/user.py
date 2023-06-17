@@ -10,7 +10,7 @@ class User(Base):
     id: Mapped[int] = mapped_column(Integer, primary_key=True, nullable=False)
 
     user_name: Mapped[str] = mapped_column(String, nullable=False)
-    user_email: Mapped[str] = mapped_column(String, nullable=False, unique=True)
+    user_email: Mapped[str] = mapped_column(String, nullable=False)
     user_phone: Mapped[str] = mapped_column(String, nullable=False)
     user_school: Mapped[str] = mapped_column(String, nullable=False)
     user_attendance: Mapped[bool] = mapped_column(Boolean, nullable=False)
