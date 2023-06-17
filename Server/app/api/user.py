@@ -14,7 +14,9 @@ router = APIRouter()
 
 
 @router.post("/", response_model=User)
-async def create_user_endpoint(*, db: Session = Depends(get_db), api_key = Security(get_api_key), user: UserCreate):
+async def create_user_endpoint(
+    *, db: Session = Depends(get_db), api_key=Security(get_api_key), user: UserCreate
+):
     try:
         db_user = create_user(db=db, user=user)
 

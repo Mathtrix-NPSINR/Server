@@ -6,7 +6,6 @@ from sqlalchemy.orm import Session
 from app.core.api_key import get_api_key
 from app.core.db import get_db
 from app.crud.event import create_event, delete_event, read_event, update_event
-
 # from app.crud.api_key import create_api_key
 from app.schemas.event import Event, EventCreate, EventUpdate
 
