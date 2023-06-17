@@ -17,4 +17,3 @@ def get_api_key(api_key: str = Security(api_key), db: Session = Depends(get_db))
         )
 
     return db_api_key
-
