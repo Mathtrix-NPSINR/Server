@@ -1,7 +1,9 @@
-from fastapi import APIRouter, Depends, HTTPException
+from fastapi import APIRouter, Depends, HTTPException, Security
+from loguru import logger
 from sqlalchemy.exc import IntegrityError
 from sqlalchemy.orm import Session
 
+from app.core.api_key import get_api_key
 from app.core.db import get_db
 from app.core.mail import send_email
 from app.core.qr_code import create_qr_code
@@ -27,6 +29,8 @@ async def create_user_endpoint(*, db: Session = Depends(get_db), user: UserCreat
             attachments=[qr_code_path],
         )
 
+        logger.info(f"A new user with the user id {db_user.id} was created!")
+
         return db_user
 
     except IntegrityError:
@@ -37,20 +41,8 @@ async def create_user_endpoint(*, db: Session = Depends(get_db), user: UserCreat
 
 
 @router.get("/", response_model=User)
-async def get_user_endpoint(*, db: Session = Depends(get_db), user_id: int):
-    db_user = read_user(db=db, user_id=user_id)
-
-    if not db_user:
-        raise HTTPException(
-            status_code=404, detail=f"A user with the id {user_id} does not exist!"
-        )
-
-    return db_user
-
-
-@router.put("/", response_model=User)
-async def update_user_endpoint(
-    *, db: Session = Depends(get_db), user_id: int, user: UserUpdate
+async def get_user_endpoint(
+    *, db: Session = Depends(get_db), api_key=Security(get_api_key), user_id: int
 ):
     db_user = read_user(db=db, user_id=user_id)
 
@@ -59,16 +51,42 @@ async def update_user_endpoint(
             status_code=404, detail=f"A user with the id {user_id} does not exist!"
         )
 
-    return update_user(db=db, user_id=user_id, user=user)
+    logger.info(f"{api_key.user} read the details of user id {db_user.id}")
+
+    return db_user
 
 
-@router.delete("/")
-async def delete_user_endpoint(*, db: Session = Depends(get_db), user_id: int):
+@router.put("/", response_model=User)
+async def update_user_endpoint(
+    *,
+    db: Session = Depends(get_db),
+    user_id: int,
+    api_key=Security(get_api_key),
+    user: UserUpdate,
+):
     db_user = read_user(db=db, user_id=user_id)
 
     if not db_user:
         raise HTTPException(
             status_code=404, detail=f"A user with the id {user_id} does not exist!"
         )
+
+    logger.info(f"{api_key.user} updated the details of user id {db_user.id}")
+
+    return update_user(db=db, user_id=user_id, user=user)
+
+
+@router.delete("/")
+async def delete_user_endpoint(
+    *, db: Session = Depends(get_db), api_key=Security(get_api_key), user_id: int
+):
+    db_user = read_user(db=db, user_id=user_id)
+
+    if not db_user:
+        raise HTTPException(
+            status_code=404, detail=f"A user with the id {user_id} does not exist!"
+        )
+
+    logger.info(f"{api_key.user} deleted user id {db_user.id}")
 
     return delete_user(db=db, user_id=user_id)
