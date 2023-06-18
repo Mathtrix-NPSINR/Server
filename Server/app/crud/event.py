@@ -21,7 +21,12 @@ def create_event(db: Session, event: event_schemas.EventCreate):
     return db_event
 
 
-def read_event(db: Session, event_id: int):
+def read_event(db: Session, event_id: int | None):
+    if event_id is None:
+        db_events = db.query(event_models.Event).all()
+
+        return db_events
+
     db_event = (
         db.query(event_models.Event).filter(event_models.Event.id == event_id).first()
     )

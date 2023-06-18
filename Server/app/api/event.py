@@ -1,13 +1,13 @@
+from app.core.api_key import get_api_key
+from app.core.db import get_db
+from app.crud.event import create_event, delete_event, read_event, update_event
+
+# from app.crud.api_key import create_api_key
+from app.schemas.event import Event, EventCreate, EventUpdate
 from fastapi import APIRouter, Depends, HTTPException, Security
 from loguru import logger
 from sqlalchemy.exc import IntegrityError
 from sqlalchemy.orm import Session
-
-from app.core.api_key import get_api_key
-from app.core.db import get_db
-from app.crud.event import create_event, delete_event, read_event, update_event
-# from app.crud.api_key import create_api_key
-from app.schemas.event import Event, EventCreate, EventUpdate
 
 router = APIRouter()
 
@@ -38,12 +38,12 @@ async def create_event_endpoint(
         )
 
 
-@router.get("/", response_model=Event)
+@router.get("/", response_model=Event | list[Event])
 async def get_event_endpoint(
     *,
     db: Session = Depends(get_db),
     api_key=Security(get_api_key),
-    event_id: int,
+    event_id: int | None = None,
 ):
     db_event = read_event(db=db, event_id=event_id)
 
