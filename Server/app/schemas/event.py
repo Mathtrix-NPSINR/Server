@@ -1,6 +1,5 @@
-from pydantic import BaseModel, HttpUrl
-
 from app.schemas.team import Team
+from pydantic import BaseModel, HttpUrl
 
 
 class EventBase(BaseModel):
@@ -41,3 +40,18 @@ class EventInDBBase(EventBase):
 
 class Event(EventInDBBase):
     pass
+
+
+class EventDetails(BaseModel):
+    id: int
+    event_name: str
+    event_tagline: str
+    event_description: str
+    event_rules: str
+    event_heads: str
+    event_icon: HttpUrl
+
+    class Config:
+        orm_mode = True
+
+    # event_teams: None
