@@ -17,4 +17,4 @@ async def create_api_key_endpoint(*, db: Session = Depends(get_db), user: str):
 
 @router.get("/")
 async def check_api_key_endpoint(*, api_key=Security(get_api_key)):
-    return True
+    return api_key
