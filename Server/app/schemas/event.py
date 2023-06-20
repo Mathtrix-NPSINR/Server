@@ -9,6 +9,7 @@ class EventBase(BaseModel):
     event_rules: str | None = None
     event_heads: str | None = None
     event_icon: HttpUrl | None = None
+    event_maximum_participants: int | None = None
 
     event_teams: list[Team] | None = None
 
@@ -20,6 +21,7 @@ class EventCreate(EventBase):
     event_rules: str
     event_heads: str
     event_icon: HttpUrl
+    event_maximum_participants: int
 
 
 class EventUpdate(EventBase):
@@ -29,6 +31,7 @@ class EventUpdate(EventBase):
     event_rules: str | None = None
     event_heads: str | None = None
     event_icon: HttpUrl | None = None
+    event_maximum_participants: int
 
 
 class EventInDBBase(EventBase):
@@ -50,6 +53,7 @@ class EventDetails(BaseModel):
     event_rules: str
     event_heads: str
     event_icon: HttpUrl
+    event_maximum_participants: int
 
     class Config:
         orm_mode = True
