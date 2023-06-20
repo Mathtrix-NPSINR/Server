@@ -12,6 +12,7 @@ def create_event(db: Session, event: event_schemas.EventCreate):
         event_rules=event.event_rules,
         event_heads=event.event_heads,
         event_icon=event.event_icon,
+        event_maximum_participants=event.event_maximum_participants
     )
 
     db.add(db_event)
@@ -56,6 +57,9 @@ def update_event(db: Session, event_id: int, event: event_schemas.EventUpdate):
 
     if event.event_icon is not None:
         db_event.event_icon = event.event_icon
+
+    if event.event_maximum_participants is not None:
+        db_event.event_maximum_participants = event.event_maximum_participants
 
     db.add(db_event)
     db.commit()
