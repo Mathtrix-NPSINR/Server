@@ -1,4 +1,4 @@
-from sqlalchemy import Integer, String
+from sqlalchemy import Integer, String, Integer
 from sqlalchemy.orm import Mapped, mapped_column, relationship
 
 from app.core.db import Base
@@ -15,5 +15,6 @@ class Event(Base):
     event_rules: Mapped[str] = mapped_column(String, nullable=False)
     event_heads: Mapped[str] = mapped_column(String, nullable=False)
     event_icon: Mapped[str] = mapped_column(String, nullable=False)
+    event_maximum_participants: Mapped[int] = mapped_column(Integer, nullable=False)
 
     event_teams: Mapped[list["Team"]] = relationship()
