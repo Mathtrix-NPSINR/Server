@@ -31,7 +31,7 @@ class EventUpdate(EventBase):
     event_rules: str | None = None
     event_heads: str | None = None
     event_icon: HttpUrl | None = None
-    event_maximum_participants: int
+    event_maximum_participants: int | None = None
 
 
 class EventInDBBase(EventBase):
