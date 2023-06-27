@@ -7,12 +7,6 @@ import app.schemas.event as event_schemas
 def create_event(db: Session, event: event_schemas.EventCreate):
     db_event = event_models.Event(
         event_name=event.event_name,
-        event_tagline=event.event_tagline,
-        event_description=event.event_description,
-        event_rules=event.event_rules,
-        event_heads=event.event_heads,
-        event_icon=event.event_icon,
-        event_maximum_participants=event.event_maximum_participants
     )
 
     db.add(db_event)
@@ -42,24 +36,6 @@ def update_event(db: Session, event_id: int, event: event_schemas.EventUpdate):
 
     if event.event_name is not None:
         db_event.event_name = event.event_name
-
-    if event.event_tagline is not None:
-        db_event.event_tagline = event.event_tagline
-
-    if event.event_description is not None:
-        db_event.event_description = event.event_description
-
-    if event.event_rules is not None:
-        db_event.event_rules = event.event_rules
-
-    if event.event_heads is not None:
-        db_event.event_heads = event.event_heads
-
-    if event.event_icon is not None:
-        db_event.event_icon = event.event_icon
-
-    if event.event_maximum_participants is not None:
-        db_event.event_maximum_participants = event.event_maximum_participants
 
     db.add(db_event)
     db.commit()

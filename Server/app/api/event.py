@@ -60,30 +60,6 @@ async def get_event_endpoint(
 
     return db_event
 
-
-@router.get("/details", response_model=EventDetails | list[EventDetails])
-async def get_event_details_endpoint(
-    *,
-    db: Session = Depends(get_db),
-    api_key=Security(get_api_key),
-    event_id: int | None = None,
-):
-    db_event = read_event(db=db, event_id=event_id)
-
-    if not db_event:
-        raise HTTPException(
-            status_code=404, detail=f"An event with the id {event_id} does not exist!"
-        )
-
-    if event_id is None:
-        logger.info(f"{api_key.user} read the details of all events")
-
-    else:
-        logger.info(f"{api_key.user} read the details of the event id {db_event.id}")
-
-    return db_event
-
-
 @router.put("/", response_model=Event)
 async def update_event_endpoint(
     *,
