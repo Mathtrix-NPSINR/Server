@@ -1,7 +1,6 @@
-from sqlalchemy.orm import Session
-
 import app.models.user as user_models
 import app.schemas.user as user_schemas
+from sqlalchemy.orm import Session
 
 
 def create_user(db: Session, user: user_schemas.UserCreate):
@@ -61,3 +60,15 @@ def delete_user(db: Session, user_id: int):
     db.commit()
 
     return f"Deleted {name}!"
+
+
+def update_user_attendance(db: Session, user_id: int):
+    db_user = db.query(user_models.User).filter(user_models.User.id == user_id).first()
+
+    db_user.user_attendance = True
+
+    db.add(db_user)
+    db.commit()
+    db.refresh(db_user)
+
+    return f"{db_user.user_name} was marked present!"

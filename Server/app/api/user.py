@@ -2,12 +2,19 @@ from app.core.api_key import get_api_key
 from app.core.db import get_db
 from app.core.mail import send_email
 from app.core.qr_code import create_qr_code
-from app.crud.user import create_user, delete_user, read_user, update_user
+from app.crud.user import (
+    create_user,
+    delete_user,
+    read_user,
+    update_user,
+    update_user_attendance,
+)
 from app.schemas.user import User, UserCreate, UserUpdate
 from fastapi import APIRouter, Depends, HTTPException, Security
 from loguru import logger
 from sqlalchemy.exc import IntegrityError
 from sqlalchemy.orm import Session
+from yagmail.oauth2 import base64
 
 router = APIRouter()
 
@@ -93,3 +100,24 @@ async def delete_user_endpoint(
     logger.info(f"{api_key.user} deleted user id {db_user.id}")
 
     return delete_user(db=db, user_id=user_id)
+
+
+@router.put("/attendance")
+async def update_user_attendance_endpoint(
+    *,
+    db: Session = Depends(get_db),
+    api_key=Security(get_api_key),
+    user_id_encoded: str,
+):
+    user_id = int(base64.b64decode(user_id_encoded.encode("utf-8")).decode("utf-8"))
+
+    db_user = read_user(db=db, user_id=user_id)
+
+    if not db_user:
+        raise HTTPException(
+            status_code=404, detail=f"A user with the id {user_id} does not exist!"
+        )
+
+    logger.info(f"{api_key.user} updated the attendance of {db_user.user_name}")
+
+    return update_user_attendance(db=db, user_id=user_id)
