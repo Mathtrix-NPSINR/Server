@@ -1,14 +1,13 @@
-from fastapi import APIRouter, Depends, HTTPException, Security
-from loguru import logger
-from sqlalchemy.exc import IntegrityError
-from sqlalchemy.orm import Session
-
 from app.core.api_key import get_api_key
 from app.core.db import get_db
 from app.core.mail import send_email
 from app.core.qr_code import create_qr_code
 from app.crud.user import create_user, delete_user, read_user, update_user
 from app.schemas.user import User, UserCreate, UserUpdate
+from fastapi import APIRouter, Depends, HTTPException, Security
+from loguru import logger
+from sqlalchemy.exc import IntegrityError
+from sqlalchemy.orm import Session
 
 router = APIRouter()
 
@@ -26,12 +25,14 @@ async def create_user_endpoint(
             target_email=[user.user_email],
             subject="You have successfully registered",
             body=f"Welcome, {user.user_name}! Thank you for registering for Mathtrix! On the day of the event, "
-            f"you'll need to show this QR code at the registration desk to complete your registration on the "
-            f"day of the event. Please save this QR code as it cannot be issued again.",
+            f"you'll need to show this QR code at the registration desk to complete your registration on site. "
+            f"Please save this QR code as it cannot be issued again.",
             attachments=[qr_code_path],
         )
 
-        logger.info(f"{api_key.user} new user with the user id {db_user.id}")
+        logger.info(
+            f"{api_key.user} registered a new user with the user id {db_user.id}"
+        )
 
         return db_user
 
