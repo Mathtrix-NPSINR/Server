@@ -9,7 +9,7 @@ def create_user(db: Session, user: user_schemas.UserCreate):
         user_email=user.user_email,
         user_phone=user.user_phone,
         user_school=user.user_school,
-        user_attendance=False,
+        user_attendance=user.user_attendance,
         team_id=user.team_id,
     )
 
