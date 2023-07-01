@@ -26,6 +26,12 @@ async def create_user_endpoint(
     try:
         db_user = create_user(db=db, user=user)
 
+        if db_user.user_attendance is True:
+            logger.info(
+                f"{api_key.user} registered a new user on spot with the user id {db_user.id}"
+            )
+            return db_user
+
         qr_code_path = create_qr_code(id=db_user.id)
 
         send_email(
