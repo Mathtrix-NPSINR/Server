@@ -25,12 +25,3 @@ class EventInDBBase(EventBase):
 class Event(EventInDBBase):
     pass
 
-
-class EventDetails(BaseModel):
-    id: int
-    event_name: str
-
-    class Config:
-        orm_mode = True
-
-    # event_teams: None

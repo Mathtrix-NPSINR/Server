@@ -2,8 +2,7 @@ from app.core.api_key import get_api_key
 from app.core.db import get_db
 from app.crud.event import create_event, delete_event, read_event, update_event
 
-# from app.crud.api_key import create_api_key
-from app.schemas.event import Event, EventCreate, EventUpdate, EventDetails
+from app.schemas.event import Event, EventCreate, EventUpdate
 from fastapi import APIRouter, Depends, HTTPException, Security
 from loguru import logger
 from sqlalchemy.exc import IntegrityError
@@ -12,9 +11,7 @@ from sqlalchemy.orm import Session
 router = APIRouter()
 
 
-# @router.post("/", response_model=dict)
 @router.post("/", response_model=Event)
-# async def create_event_endpoint(*, db: Session = Depends(get_db), user: str, event: EventCreate):
 async def create_event_endpoint(
     *,
     db: Session = Depends(get_db),
@@ -29,7 +26,6 @@ async def create_event_endpoint(
         )
 
         return db_event
-        # return create_api_key(db=db, user=user).__dict__
 
     except IntegrityError:
         raise HTTPException(
