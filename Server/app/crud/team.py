@@ -6,7 +6,6 @@ import app.schemas.team as team_schemas
 
 def create_team(db: Session, team: team_schemas.TeamCreate):
     db_team = team_models.Team(
-        team_name=team.team_name,
         team_school=team.team_school,
         team_event=team.team_event,
         event_id=team.event_id,
@@ -28,9 +27,6 @@ def read_team(db: Session, team_id: int):
 def update_team(db: Session, team_id: int, team: team_schemas.TeamUpdate):
     db_team = db.query(team_models.Team).filter(team_models.Team.id == team_id).first()
 
-    if team.team_name is not None:
-        db_team.team_name = team.team_name
-
     if team.team_school is not None:
         db_team.team_school = team.team_school
 
@@ -47,9 +43,9 @@ def update_team(db: Session, team_id: int, team: team_schemas.TeamUpdate):
 def delete_team(db: Session, team_id: int):
     db_team = db.query(team_models.Team).filter(team_models.Team.id == team_id).first()
 
-    team_name = db_team.team_name
+    team_id = db_team.id
 
     db.delete(db_team)
     db.commit()
 
-    return f"Deleted {team_name}!"
+    return f"Deleted team with the id {team_id}!"

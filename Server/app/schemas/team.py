@@ -4,7 +4,6 @@ from app.schemas.user import User
 
 
 class TeamBase(BaseModel):
-    team_name: str | None = None
     team_school: str | None = None
     team_event: str | None = None
 
@@ -14,7 +13,6 @@ class TeamBase(BaseModel):
 
 
 class TeamCreate(TeamBase):
-    team_name: str
     team_school: str
     team_event: str
 
@@ -22,7 +20,6 @@ class TeamCreate(TeamBase):
 
 
 class TeamUpdate(TeamBase):
-    team_name: str | None = None
     team_school: str | None = None
     team_event: str | None = None
 

@@ -9,7 +9,6 @@ class Team(Base):
 
     id: Mapped[int] = mapped_column(Integer, primary_key=True, nullable=False)
 
-    team_name: Mapped[str] = mapped_column(String, nullable=False, unique=True)
     team_school: Mapped[str] = mapped_column(String, nullable=False)
     team_event: Mapped[str] = mapped_column(String, nullable=False)
 

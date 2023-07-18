@@ -18,16 +18,9 @@ async def create_team_endpoint(
     api_key=Security(get_api_key),
     team: TeamCreate,
 ):
-    try:
-        db_team = create_team(db=db, team=team)
-        logger.info(f"{api_key.user} created a new team with the team id {db_team.id}")
-        return db_team
-
-    except IntegrityError:
-        raise HTTPException(
-            status_code=400,
-            detail=f"A team with the name {team.team_name} already exists!",
-        )
+    db_team = create_team(db=db, team=team)
+    logger.info(f"{api_key.user} created a new team with the team id {db_team.id}")
+    return db_team
 
 
 @router.get("/", response_model=Team)
