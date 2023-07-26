@@ -1,22 +1,22 @@
-from app.core.api_key import get_api_key
-from app.core.db import get_db
-from app.crud.event import create_event, delete_event, read_event, update_event
-
-from app.schemas.event import Event, EventCreate, EventUpdate
 from fastapi import APIRouter, Depends, HTTPException, Security
 from loguru import logger
 from sqlalchemy.exc import IntegrityError
 from sqlalchemy.orm import Session
+
+from app.core.api_key import get_api_key
+from app.core.db import get_db
+from app.crud.event import create_event, delete_event, read_event, update_event
+from app.schemas.event import Event, EventCreate, EventUpdate
 
 router = APIRouter()
 
 
 @router.post("/", response_model=Event)
 async def create_event_endpoint(
-    *,
-    db: Session = Depends(get_db),
-    api_key=Security(get_api_key),
-    event: EventCreate,
+        *,
+        db: Session = Depends(get_db),
+        api_key=Security(get_api_key),
+        event: EventCreate,
 ):
     try:
         db_event = create_event(db=db, event=event)
@@ -36,10 +36,10 @@ async def create_event_endpoint(
 
 @router.get("/", response_model=Event | list[Event])
 async def get_event_endpoint(
-    *,
-    db: Session = Depends(get_db),
-    api_key=Security(get_api_key),
-    event_id: int | None = None,
+        *,
+        db: Session = Depends(get_db),
+        api_key=Security(get_api_key),
+        event_id: int | None = None,
 ):
     db_event = read_event(db=db, event_id=event_id)
 
@@ -56,13 +56,14 @@ async def get_event_endpoint(
 
     return db_event
 
+
 @router.put("/", response_model=Event)
 async def update_event_endpoint(
-    *,
-    db: Session = Depends(get_db),
-    api_key=Security(get_api_key),
-    event_id: int,
-    event: EventUpdate,
+        *,
+        db: Session = Depends(get_db),
+        api_key=Security(get_api_key),
+        event_id: int,
+        event: EventUpdate,
 ):
     db_event = read_event(db=db, event_id=event_id)
 
@@ -78,10 +79,10 @@ async def update_event_endpoint(
 
 @router.delete("/")
 async def delete_event_endpoint(
-    *,
-    db: Session = Depends(get_db),
-    api_key=Security(get_api_key),
-    event_id: int,
+        *,
+        db: Session = Depends(get_db),
+        api_key=Security(get_api_key),
+        event_id: int,
 ):
     db_event = read_event(db=db, event_id=event_id)
 

@@ -13,12 +13,12 @@ server = yagmail.SMTP(
 
 
 def send_email(
-    target_email: list[str],
-    subject: str,
-    body: str,
-    attachments: list[str] = [],
-    cc: list[str] = [],
-    bcc: list[str] = [],
+        target_email: list[str],
+        subject: str,
+        body: str,
+        attachments: list[str] = [],
+        cc: list[str] = [],
+        bcc: list[str] = [],
 ):
     server.send(
         to=target_email,

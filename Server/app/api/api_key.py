@@ -1,11 +1,10 @@
 from fastapi import APIRouter, Depends, Security
 from loguru import logger
 from sqlalchemy.orm import Session
-from app.core.db import get_db
 
 from app.core.api_key import get_api_key
+from app.core.db import get_db
 from app.crud.api_key import create_api_key
-
 
 router = APIRouter()
 

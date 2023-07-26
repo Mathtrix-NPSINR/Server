@@ -1,3 +1,9 @@
+from fastapi import APIRouter, Depends, HTTPException, Security
+from loguru import logger
+from sqlalchemy.exc import IntegrityError
+from sqlalchemy.orm import Session
+from yagmail.oauth2 import base64
+
 from app.core.api_key import get_api_key
 from app.core.db import get_db
 from app.core.mail import send_email
@@ -10,18 +16,13 @@ from app.crud.user import (
     update_user_attendance,
 )
 from app.schemas.user import User, UserCreate, UserUpdate
-from fastapi import APIRouter, Depends, HTTPException, Security
-from loguru import logger
-from sqlalchemy.exc import IntegrityError
-from sqlalchemy.orm import Session
-from yagmail.oauth2 import base64
 
 router = APIRouter()
 
 
 @router.post("/", response_model=User)
 async def create_user_endpoint(
-    *, db: Session = Depends(get_db), api_key=Security(get_api_key), user: UserCreate
+        *, db: Session = Depends(get_db), api_key=Security(get_api_key), user: UserCreate
 ):
     try:
         db_user = create_user(db=db, user=user)
@@ -38,8 +39,8 @@ async def create_user_endpoint(
             target_email=[user.user_email],
             subject="You have successfully registered",
             body=f"Welcome, {user.user_name}! Thank you for registering for Mathtrix! On the day of the event, "
-            f"you'll need to show this QR code at the registration desk to complete your registration on site. "
-            f"Please save this QR code as it cannot be issued again.",
+                 f"you'll need to show this QR code at the registration desk to complete your registration on site. "
+                 f"Please save this QR code as it cannot be issued again.",
             attachments=[qr_code_path],
         )
 
@@ -58,7 +59,7 @@ async def create_user_endpoint(
 
 @router.get("/", response_model=User)
 async def get_user_endpoint(
-    *, db: Session = Depends(get_db), api_key=Security(get_api_key), user_id: int
+        *, db: Session = Depends(get_db), api_key=Security(get_api_key), user_id: int
 ):
     db_user = read_user(db=db, user_id=user_id)
 
@@ -74,11 +75,11 @@ async def get_user_endpoint(
 
 @router.put("/", response_model=User)
 async def update_user_endpoint(
-    *,
-    db: Session = Depends(get_db),
-    user_id: int,
-    api_key=Security(get_api_key),
-    user: UserUpdate,
+        *,
+        db: Session = Depends(get_db),
+        user_id: int,
+        api_key=Security(get_api_key),
+        user: UserUpdate,
 ):
     db_user = read_user(db=db, user_id=user_id)
 
@@ -94,7 +95,7 @@ async def update_user_endpoint(
 
 @router.delete("/")
 async def delete_user_endpoint(
-    *, db: Session = Depends(get_db), api_key=Security(get_api_key), user_id: int
+        *, db: Session = Depends(get_db), api_key=Security(get_api_key), user_id: int
 ):
     db_user = read_user(db=db, user_id=user_id)
 
@@ -110,10 +111,10 @@ async def delete_user_endpoint(
 
 @router.put("/attendance")
 async def update_user_attendance_endpoint(
-    *,
-    db: Session = Depends(get_db),
-    api_key=Security(get_api_key),
-    user_id_encoded: str,
+        *,
+        db: Session = Depends(get_db),
+        api_key=Security(get_api_key),
+        user_id_encoded: str,
 ):
     user_id = int(base64.b64decode(user_id_encoded.encode("utf-8")).decode("utf-8"))
 

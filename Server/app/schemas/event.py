@@ -1,5 +1,6 @@
-from app.schemas.team import Team
 from pydantic import BaseModel
+
+from app.schemas.team import Team
 
 
 class EventBase(BaseModel):
@@ -24,4 +25,3 @@ class EventInDBBase(EventBase):
 
 class Event(EventInDBBase):
     pass
-

@@ -1,6 +1,5 @@
 from fastapi import APIRouter, Depends, HTTPException, Security
 from loguru import logger
-from sqlalchemy.exc import IntegrityError
 from sqlalchemy.orm import Session
 
 from app.core.api_key import get_api_key
@@ -13,10 +12,10 @@ router = APIRouter()
 
 @router.post("/", response_model=Team)
 async def create_team_endpoint(
-    *,
-    db: Session = Depends(get_db),
-    api_key=Security(get_api_key),
-    team: TeamCreate,
+        *,
+        db: Session = Depends(get_db),
+        api_key=Security(get_api_key),
+        team: TeamCreate,
 ):
     db_team = create_team(db=db, team=team)
     logger.info(f"{api_key.user} created a new team with the team id {db_team.id}")
@@ -25,7 +24,7 @@ async def create_team_endpoint(
 
 @router.get("/", response_model=Team)
 async def get_team_endpoint(
-    *, db: Session = Depends(get_db), api_key=Security(get_api_key), team_id: int
+        *, db: Session = Depends(get_db), api_key=Security(get_api_key), team_id: int
 ):
     db_team = read_team(db=db, team_id=team_id)
 
@@ -41,11 +40,11 @@ async def get_team_endpoint(
 
 @router.put("/", response_model=Team)
 async def update_team_endpoint(
-    *,
-    db: Session = Depends(get_db),
-    api_key=Security(get_api_key),
-    team_id: int,
-    team: TeamUpdate,
+        *,
+        db: Session = Depends(get_db),
+        api_key=Security(get_api_key),
+        team_id: int,
+        team: TeamUpdate,
 ):
     db_team = read_team(db=db, team_id=team_id)
 
@@ -61,7 +60,7 @@ async def update_team_endpoint(
 
 @router.delete("/")
 async def delete_team_endpoint(
-    *, db: Session = Depends(get_db), api_key=Security(get_api_key), team_id: int
+        *, db: Session = Depends(get_db), api_key=Security(get_api_key), team_id: int
 ):
     db_team = read_team(db=db, team_id=team_id)
 
